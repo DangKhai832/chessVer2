@@ -1,0 +1,51 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <title>Đăng ký</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:300,400,400i|Noto+Sans:400,400i,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
+</head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<body>
+<div class="to" ng-controller="HistoryController">
+  <h1>Lịch sử trận đấu</h1>
+  <table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">Chọn màu cờ</th>
+      <th scope="col">Kết quả</th>
+      <th scope="col">Thời gian</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="match in matches">
+      <td>{{match.stt}}</td>
+      <td>{{match.color}}</td>
+      <td>{{match.result}}</td>
+      <td>{{match.time}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <label>Mật khẩu</label>
+  <input id="remove" type="remove" name="remove" value="Tạo tài khoản" ng-click="remove()">
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script>
+  var app = angular.module('myApp', []);
+  app.controller('HistoryController', function ($scope) {
+    $scope.matches = [
+      { stt: 1, color: 'Trắng', result: 'Thắng', time: '2023-10-31 15:30' },
+      { stt: 2, color: 'Đen', result: 'Hòa', time: '2023-10-30 14:15' },
+      // Thêm lịch sử trận đấu khác ở đây
+    ];
+  });
+</script>
+
+</body>
+</html>
