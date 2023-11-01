@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 public interface UserController {
 
-    @GetMapping("/home")
+    @GetMapping("/login")
     public String home();
 
     @GetMapping("/createAccount")
     public String createAccount();
+    @GetMapping("/information")
+    public String getInformation();
 }

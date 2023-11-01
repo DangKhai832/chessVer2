@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.BO.HistoryBO;
 import com.example.demo.BO.UserBO;
 import com.example.demo.DTO.UserDTO;
 import com.example.demo.Service.ChessService;
@@ -24,6 +25,11 @@ public class RestControllerImpl implements RestController{
     }
 
     @Override
+    public String checkLogin(UserDTO obj) {
+        return chessService.checkLogin(obj);
+    }
+
+    @Override
     public UserBO update(UserDTO obj) {
         return chessService.update(obj);
     }
@@ -31,5 +37,10 @@ public class RestControllerImpl implements RestController{
     @Override
     public UserBO delete(UserDTO obj) {
         return chessService.delete(obj);
+    }
+
+    @Override
+    public HistoryBO getHistory(HistoryBO obj) {
+        return chessService.getHistory(obj);
     }
 }

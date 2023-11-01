@@ -1,8 +1,11 @@
 package com.example.demo.Repository;
 
+import com.example.demo.BO.HistoryBO;
 import com.example.demo.BO.UserBO;
 import com.example.demo.DTO.UserDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -116,30 +119,10 @@ public interface ChessRepository extends JpaRepository<UserBO,Long> {
         return userDTO;
     };
 
-//    public default UserBO detail(UserDTO obj){
-//        String url = "jdbc:mysql://localhost:3306/project";
-//        String user = "root";
-//        String password = "root";
-//
-//        StringBuilder sb = new StringBuilder();
-//        sb.append(" UPDATE `chess ` SET `IS_DELETE`= 1," +
-//                " WHERE ? ");
-//        UserBO userDTO = new UserBO();
-//        try (Connection connection = DriverManager.getConnection(url, user, password);
-//             PreparedStatement preparedStatement = connection.prepareStatement(sb.toString())) {
-//
-//            int parameterIndex = 1;
-//            preparedStatement.setLong(parameterIndex, obj.getUserId());
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            userDTO.setUserId(resultSet.getLong("userId"));
-//            userDTO.setName(resultSet.getString("name"));
-//            userDTO.setAddress(resultSet.getString("address"));
-//            userDTO.setPhoneNumber(resultSet.getString("phone_number"));
-//            userDTO.setElo(resultSet.getLong("elo"));
-//            userDTO.setCreatedDate(resultSet.getDate("createdDate"));
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return userDTO;
-//    };
+
+    @Query(value = "SELECT * FROM history", nativeQuery = true)
+    HistoryBO getHistory(HistoryBO obj);
+
+    @Query(value = "SELECT COUNT(*) FROM CHESS c WHERE c.username = :username AND c.password = :password", nativeQuery = true)
+    Long checkLogin(@Param("username") String username, @Param("password") String password);
 }

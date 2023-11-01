@@ -14,10 +14,15 @@ import java.util.List;
 public class UserControllerImpl implements UserController {
 
     @Override
-    public  String home() { return "view.html";}
+    public  String home() { return "login.html";}
 
     @Override
     public String createAccount() {
         return "accountCreationScreen.html";
+    }
+
+    @Override
+    public String getInformation() {
+        return "information.html";
     }
 }

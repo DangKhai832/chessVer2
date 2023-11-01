@@ -38,12 +38,27 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 <script>
   var app = angular.module('myApp', []);
-  app.controller('HistoryController', function ($scope) {
-    $scope.matches = [
-      { stt: 1, color: 'Trắng', result: 'Thắng', time: '2023-10-31 15:30' },
-      { stt: 2, color: 'Đen', result: 'Hòa', time: '2023-10-30 14:15' },
-      // Thêm lịch sử trận đấu khác ở đây
-    ];
+  app.controller('HistoryController', function ($scope, $http) {
+    // Khởi tạo biến matches với một mảng trống
+    $scope.matches = [];
+
+    // Tạo một hàm để gọi API và lấy lịch sử trận đấu
+    $scope.getHistory = function () {
+      var requestData = {
+        // Các tham số POST nếu cần
+      };
+
+      $http({
+        method: 'POST',
+        url: '/getHistory', // Đường dẫn API
+        data: requestData // Dữ liệu gửi lên server nếu có
+      }).then(function (response) {
+        // Xử lý kết quả từ API ở đây
+        $scope.matches = response.data; // Gán dữ liệu từ API vào biến matches
+      }, function (error) {
+        console.error('Lỗi khi gọi API:', error);
+      });
+    };
   });
 </script>
 

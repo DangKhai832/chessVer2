@@ -13,6 +13,8 @@ public class UserDTO {
     private Long elo;
     private Date createdDate;
     private Long isDeleted;
+    private String username;
+    private String password;
 
     public Long getUserId() {
         return userId;
@@ -78,6 +80,22 @@ public class UserDTO {
         this.email = email;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public UserBO toModel () {
         UserBO bo = new UserBO();
         bo.setUserId(this.userId);
@@ -88,6 +106,8 @@ public class UserDTO {
         bo.setCreatedDate(this.createdDate);
         bo.setIsDeleted(this.isDeleted);
         bo.setEmail(this.email);
+        bo.setUsername(this.username);
+        bo.setPassword(this.password);
         return bo;
     }
 }
