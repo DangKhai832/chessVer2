@@ -1,10 +1,13 @@
 package com.example.demo.BO;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "HISTORY")
+
 public class HistoryBO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,10 +15,10 @@ public class HistoryBO {
     private Long historyId;
 
     @Column(name = "COLOR")
-    private String color;
+    private Long color;
 
     @Column(name = "RESULT")
-    private String result;
+    private Long result;
 
     @Column(name = "UPDATED_TIME")
     private LocalDateTime updatedTime;
@@ -29,22 +32,6 @@ public class HistoryBO {
 
     public void setHistoryId(Long historyId) {
         this.historyId = historyId;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
     }
 
     public LocalDateTime getUpdatedTime() {
@@ -61,5 +48,21 @@ public class HistoryBO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getColor() {
+        return color;
+    }
+
+    public void setColor(Long color) {
+        this.color = color;
+    }
+
+    public Long getResult() {
+        return result;
+    }
+
+    public void setResult(Long result) {
+        this.result = result;
     }
 }

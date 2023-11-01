@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.BO.HistoryBO;
 import com.example.demo.BO.UserBO;
+import com.example.demo.DTO.HistoryDTO;
 import com.example.demo.DTO.UserDTO;
 import com.example.demo.Service.ChessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class RestControllerImpl implements RestController{
     }
 
     @Override
-    public HistoryBO getHistory(HistoryBO obj) {
-        return chessService.getHistory(obj);
+    public List<HistoryDTO> getHistory() {
+        return chessService.getHistory();
     }
 }

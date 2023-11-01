@@ -31,7 +31,7 @@
             border: 1px solid #80808000;
             grid-column: 6/9;
             grid-row: 3;
-            height: 470px;
+            height: 580px;
             width: 292px;
             display: flex;
             flex-direction: column;
@@ -71,7 +71,10 @@
             padding: 5px;
             width: 70%;
         }
-
+        input[type="password"] {
+            padding: 5px;
+            width: 70%;
+        }
         input#submit {
             padding: 7px;
             width: 50%;
@@ -94,13 +97,18 @@
 <div class="to" ng-controller="myCtrl">
     <div class="form">
         <h2>Đăng ký tài khoản</h2>
-        <i class="fab fa-app-store-ios"></i>
         <label style="margin-left: -150px;">Họ và tên</label>
         <input type="text" name="name" ng-model="name">
-        <label>Số điện thoại</label>
+        <label style="margin-left: -125px;">Số điện thoại</label>
         <input type="text" name="phoneNumber" ng-model="phoneNumber">
+        <label style="margin-left: -170px;">Địa chỉ</label>
+        <input type="text" name="address" ng-model="address">
         <label style="margin-left: -180px;">Email</label>
         <input type="text" name="email" ng-model="email">
+        <label style="margin-left: -110px;">Tên đăng nhập</label>
+        <input type="text" name="username" ng-model="username">
+        <label style="margin-left: -145px;">Password</label>
+        <input type="password" name="password" ng-model="password">
         <input id="submit" type="submit" name="submit" value="Gửi" ng-click="submitForm()">
     </div>
 </div>
@@ -109,40 +117,43 @@
 <script>
     var app = angular.module('myApp', []);
     app.controller('myCtrl', function ($scope, $http) {
-    $scope.submitForm = function () {
-<!--        if (!$scope.name || !$scope.phoneNumber || !$scope.email) {-->
-<!--            alert('Vui lòng điền đầy đủ thông tin.');-->
-<!--        } else if (!isValidEmail($scope.email)) {-->
-<!--            alert('Vui lòng nhập một địa chỉ email hợp lệ.');-->
-<!--        } else {-->
-            var data = {
-                email: $scope.email,
-                phoneNumber: $scope.phoneNumber,
-                name: $scope.name
-            };
-            $http({
-                method: 'POST',
-                url: '/createAcc',
-                data: data
-            }).then(function (response) {
-                // Xử lý kết quả từ API ở đây
-                if (response.data.status === 'SUCCESS') {
+        $scope.submitForm = function () {
+            if (!$scope.name || !$scope.address || !$scope.phoneNumber || !$scope.email || !$scope.username || !$scope.password  ) {
+                alert('Vui lòng điền đầy đủ thông tin.');
+            } else if (!isValidEmail($scope.email)) {
+                alert('Vui lòng nhập một địa chỉ email hợp lệ.');
+            } else {
+                var data = {
+                    email: $scope.email,
+                    phoneNumber: $scope.phoneNumber,
+                    name: $scope.name,
+                    address: $scope.address,
+                    username: $scope.username,
+                    password: $scope.password
+                };
+                $http({
+                    method: 'POST',
+                    url: '/createAcc',
+                    data: data, // Chuyển đổi thành chuỗi JSON
+                    transformResponse: [function (data) {
+                        return data;
+                    }]
+                }).then(function (response) {
                     alert('Lưu thành công.');
-                } else {
-                    alert('Có vấn đề khi lưu.');
-                }
-            }, function (error) {
-                alert('Có lỗi xảy ra khi gọi API.');
-            });
-<!--        }-->
+                    alert('Điều hướng về đăng nhập');
+                    $window.location.href = '/login';
 
-         function isValidEmail(email) {
-            // Sử dụng biểu thức chính quy để kiểm tra địa chỉ email
+                }, function (error) {
+                    alert('Có lỗi xảy ra khi gọi API.');
+                });
+            }
+        };
+
+        function isValidEmail(email) {
             var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
             return emailPattern.test(email);
-         }
-    };
-});
+        }
+    });
 </script>
 </body>
 </html>

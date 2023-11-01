@@ -4,6 +4,7 @@ package com.example.demo.Service;
 
 import com.example.demo.BO.HistoryBO;
 import com.example.demo.BO.UserBO;
+import com.example.demo.DTO.HistoryDTO;
 import com.example.demo.DTO.UserDTO;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface ChessService {
 
     UserBO delete(UserDTO obj);
 
-    HistoryBO getHistory(HistoryBO obj);
+    List<HistoryDTO> getHistory();
 
     String checkLogin(UserDTO obj);
 }

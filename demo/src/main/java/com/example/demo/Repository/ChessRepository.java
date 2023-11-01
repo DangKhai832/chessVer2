@@ -2,6 +2,7 @@ package com.example.demo.Repository;
 
 import com.example.demo.BO.HistoryBO;
 import com.example.demo.BO.UserBO;
+import com.example.demo.DTO.HistoryDTO;
 import com.example.demo.DTO.UserDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -120,9 +121,10 @@ public interface ChessRepository extends JpaRepository<UserBO,Long> {
     };
 
 
-    @Query(value = "SELECT * FROM history", nativeQuery = true)
-    HistoryBO getHistory(HistoryBO obj);
+    @Query(value = "SELECT h.history_id historyId, h.color color, h.result result , h.updated_time updatedTime, h.user_id userId FROM history h", nativeQuery = true)
+    List<HistoryDTO> getHistory();
 
     @Query(value = "SELECT COUNT(*) FROM CHESS c WHERE c.username = :username AND c.password = :password", nativeQuery = true)
     Long checkLogin(@Param("username") String username, @Param("password") String password);
+
 }

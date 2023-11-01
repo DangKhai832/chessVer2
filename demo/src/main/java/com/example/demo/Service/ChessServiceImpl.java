@@ -2,10 +2,12 @@ package com.example.demo.Service;
 
 import com.example.demo.BO.HistoryBO;
 import com.example.demo.BO.UserBO;
+import com.example.demo.DTO.HistoryDTO;
 import com.example.demo.DTO.UserDTO;
 import com.example.demo.Repository.ChessRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,13 @@ import java.util.List;
 public class ChessServiceImpl implements ChessService{
     @Autowired
     ChessRepository chessRepository;
+    @Autowired
+    private ConversionService conversionService;
+
+    public HistoryBO convertBigIntegerToHistoryBO(java.math.BigInteger source) {
+        HistoryBO historyBO = conversionService.convert(source, HistoryBO.class);
+        return historyBO;
+    }
     @Override
     public UserBO creatAucount(UserDTO obj) {
         obj.setIsDeleted(0L);
@@ -41,8 +50,8 @@ public class ChessServiceImpl implements ChessService{
     }
 
     @Override
-    public HistoryBO getHistory(HistoryBO obj) {
-        return chessRepository.getHistory(obj);
+    public List<HistoryDTO>getHistory() {
+        return chessRepository.getHistory();
     }
 
     @Override
