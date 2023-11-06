@@ -211,7 +211,7 @@ input[type="submit"]:active
                     <i>Mật khẩu</i>
                 </div>
                 <div class="links">
-                    <a href="#">Quên mật khẩu</a>
+                    <a ng-click="alertTB()" >Quên mật khẩu</a>
                     <a href="/createAccount">Tạo tài khoản</a>
                 </div>
                 <div class="inputBox">
@@ -253,6 +253,9 @@ input[type="submit"]:active
                 });
             }
         };
+        $scope.alertTB = function () {
+            alert('Tính năng chưa phát triển!!!')
+        }
     });
 </script>
 </body>

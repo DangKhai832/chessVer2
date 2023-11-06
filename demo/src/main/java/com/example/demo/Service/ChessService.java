@@ -1,5 +1,6 @@
 package com.example.demo.Service;
 
+import com.example.demo.BO.HistoryBO;
 import com.example.demo.BO.UserBO;
 import com.example.demo.DTO.HistoryDTO;
 import com.example.demo.DTO.UserDTO;
@@ -17,4 +18,10 @@ public interface ChessService {
     Long checkLogin(UserDTO obj);
 
     String checkRepeat(UserDTO obj);
+
+    UserBO getInfoUser(UserDTO obj);
+
+    boolean update(UserDTO obj);
+
+    boolean removeHistory(HistoryBO obj);
 }

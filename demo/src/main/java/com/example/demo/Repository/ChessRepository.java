@@ -5,7 +5,9 @@ import com.example.demo.BO.UserBO;
 import com.example.demo.DTO.HistoryDTO;
 import com.example.demo.DTO.UserDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -17,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public interface ChessRepository extends JpaRepository<UserBO,Long> {
+public interface ChessRepository extends CrudRepository<UserBO,Long> {
     public default List<UserDTO> doSearch(UserDTO obj) {
         String url = "jdbc:mysql://localhost:3306/project";
         String user = "root";
@@ -80,50 +82,10 @@ public interface ChessRepository extends JpaRepository<UserBO,Long> {
         }
         return results;
     }
-
-    public default UserBO update(UserDTO obj){
-        String url = "jdbc:mysql://localhost:3306/project";
-        String user = "root";
-        String password = "root";
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(" UPDATE `chess ` SET `NAME`=?," +
-                "`ADDRESS`=?," +
-                "`PHONE_NUMBER`=?," +
-                "`ELO`=?" +
-                " WHERE ? ");
-        UserBO userDTO = new UserBO();
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement preparedStatement = connection.prepareStatement(sb.toString())) {
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return userDTO;
-    };
-
-    public default UserBO delete(UserDTO obj){
-        String url = "jdbc:mysql://localhost:3306/project";
-        String user = "root";
-        String password = "root";
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(" UPDATE `chess ` SET `IS_DELETE`= 1," +
-                " WHERE ? ");
-        UserBO userDTO = new UserBO();
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement preparedStatement = connection.prepareStatement(sb.toString())) {
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return userDTO;
-    };
-
-
-    @Query(value = "SELECT h.history_id historyId, h.color color, h.result result , h.updated_time updatedTime, h.user_id userId FROM history h WHERE h.user_id =:userId", nativeQuery = true)
+    @Query(value = "SELECT h.history_id historyId, h.color color, h.result result, h.updated_time updatedTime, h.user_id userId\n" +
+            "FROM history h\n" +
+            "WHERE h.user_id = :userId AND h.is_deleted = 0\n" +
+            "ORDER BY h.history_id DESC;\n", nativeQuery = true)
     List<HistoryDTO> getHistory(@Param("userId") Long userId);
 
     @Query(value = "SELECT COUNT(*) as count, c.USER_ID as userId FROM CHESS c WHERE c.username = :username AND c.password = :password", nativeQuery = true)
@@ -131,4 +93,21 @@ public interface ChessRepository extends JpaRepository<UserBO,Long> {
 
     @Query(value = "SELECT COUNT(*) FROM CHESS c WHERE c.username = :username", nativeQuery = true)
     Long checkRepeat(@Param("username") String username);
+
+    @Query(value = "SELECT  c.email email, c.name name, c.address address, c.phone_number phoneNumber FROM CHESS c WHERE c.user_id = :userId", nativeQuery = true)
+    List<Object[]> getInfoUser(@Param("userId") Long userId);
+
+    @Modifying
+    @Query(value = "UPDATE CHESS c " +
+            "SET c.email = CASE WHEN :email IS NOT NULL THEN :email ELSE c.email END, " +
+            "c.name = CASE WHEN :name IS NOT NULL THEN :name ELSE c.name END, " +
+            "c.address = CASE WHEN :address IS NOT NULL THEN :address ELSE c.address END, " +
+            "c.phone_number = CASE WHEN :phoneNumber IS NOT NULL THEN :phoneNumber ELSE c.phone_number END " +
+            "WHERE c.user_id = :userId", nativeQuery = true)
+    int updateUserInfo(@Param("email") String email, @Param("name") String name, @Param("address") String address, @Param("phoneNumber") String phoneNumber, @Param("userId") Long userId);
+
+
+    @Modifying
+    @Query(value = "UPDATE HISTORY SET is_deleted = 1 WHERE HISTORY_ID = :historyId", nativeQuery = true)
+    int softDeleteUser(@Param("historyId") Long historyId);
 }

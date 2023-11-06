@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CRUD</title>
+  <title>Thông tin</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -25,20 +25,20 @@
     <div class="header">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="/login">Home</a></li>
           <li class="breadcrumb-item active" aria-current="page">Thông tin</li>
         </ol>
       </nav>
     </div>
-    <!-- Thẻ add và Tìm kiếm -->
-<!--    <div class="btn-action">-->
-<!--      <div class="row">-->
-<!--        &lt;!&ndash; thẻ add &ndash;&gt;-->
-<!--        <div class="action-left col-md-4">-->
-<!--          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal"-->
-<!--                  data-whatever="@mdo">Add</button>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; thẻ tìm kiếm &ndash;&gt;-->
+<!--     Thẻ add và Tìm kiếm -->
+    <div class="btn-action">
+      <div class="row">
+        <!-- thẻ add -->
+        <div class="action-left col-md-4">
+          <button style="margin-bottom: 20px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateAcc"
+                  data-whatever="@mdo">Update tài khoản </button>
+        </div>
+        <!-- thẻ tìm kiếm -->
 <!--        <div class="action-right col-md-8">-->
 <!--          <form>-->
 <!--            <div class="form-group">-->
@@ -46,51 +46,49 @@
 <!--            </div>-->
 <!--          </form>-->
 <!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+      </div>
+    </div>
     <!-- Chức năng khi mở thẻ Add -->
-<!--    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">-->
-<!--      <div class="modal-dialog" role="document">-->
-<!--        <div class="modal-content">-->
-<!--          <div class="modal-header">-->
-<!--            <h5 class="modal-title" id="exampleModalLabel">New message</h5>-->
-<!--            <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--              <span aria-hidden="true">&times;</span>-->
-<!--            </button>-->
-<!--          </div>-->
-<!--          <div class="modal-body">-->
-<!--            <form>-->
-<!--              <div class="form-row">-->
-<!--                <div class="form-group col-md-6">-->
-<!--                  <label for="firstName-name" class="col-form-label">First Name:</label>-->
-<!--                  <input type="text" class="form-control" id="newFirstName"-->
-<!--                         ng-model="newStudent.firstName" required>-->
-<!--                </div>-->
-<!--                <div class="form-group col-md-6">-->
-<!--                  <label for="lastName-name" class="col-form-label">Last Name:</label>-->
-<!--                  <input type="text" class="form-control" id="newLastName"-->
-<!--                         ng-model="newStudent.lastName" required>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="form-group">-->
-<!--                <label for="email" class="col-form-label">Email:</label>-->
-<!--                <input type="email" class="form-control" id="newEmail"-->
-<!--                       ng-model="newStudent.emailId" required>-->
-<!--              </div>-->
-<!--              <div class="form-group">-->
-<!--                <label for="classId" class="col-form-label">ClassId:</label>-->
-<!--                <input type="text" class="form-control" id="username"-->
-<!--                       ng-model="newStudent.classId" required>-->
-<!--              </div>-->
-<!--            </form>-->
-<!--          </div>-->
-<!--          <div class="modal-footer">-->
-<!--            <button type="button" class="btn btn-primary" ng-click="checkInput()">Save</button>-->
-<!--            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+    <div class="modal fade" id="updateAcc" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateModal">New message</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group ">
+                <label class="col-form-label">Họ và tên:</label>
+                <input type="text" class="form-control" id="name"
+                       ng-model="updateMatchData.name" required>
+              </div>
+              <div class="form-group ">
+                <label class="col-form-label" >Số điện thoại:</label>
+                <input type="text" class="form-control" id="phoneNumber"
+                     ng-model="updateMatchData.phoneNumber" required>
+              </div>
+              <div class="form-group ">
+                <label class="col-form-label" >Địa chỉ:</label>
+                <input type="text" class="form-control" id="address"
+                       ng-model="updateMatchData.address" required>
+              </div>
+              <div class="form-group">
+                <label for="email" class="col-form-label">Email:</label>
+                <input type="email" class="form-control" id="email"
+                       ng-model="updateMatchData.email" required>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" ng-click="checkInput()">Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Bảng -->
     <table class="table">
       <thead>
@@ -196,6 +194,8 @@
         $scope.currentPage = 1;
         $scope.pageSize = 5;
         $scope.deleteMatchData = {};
+        $scope.updateMatchData = {};
+        $scope.userId = -1;
 
         // load data khi khởi động
         $scope.loadData = function () {
@@ -207,10 +207,10 @@
             var urlParams = new URLSearchParams(queryString);
 
             // Lấy giá trị của tham số userId
-            var userId = urlParams.get('userId');
+            $scope.userId = urlParams.get('userId');
 
             var requestData = {
-              userId: userId
+              userId: $scope.userId
             };
           }
           $http({
@@ -224,9 +224,24 @@
             console.error('Lỗi khi gọi API:', error);
           });
           $scope.totalPages = Math.ceil($scope.matches.length / $scope.pageSize);
+          getDataUser();
         };
-        $scope.loadData()
+        $scope.loadData();
 
+        function getDataUser() {
+          var requestData = {
+            userId: $scope.userId
+          };
+          $http({
+            method: 'POST',
+            url: '/getInfoUser',
+            data: requestData
+          }).then(function (response) {
+            $scope.updateMatchData = response.data;
+          }, function (error) {
+            console.error('Lỗi khi gọi API:', error);
+          });
+        }
         $scope.getCurrentPageMatches = function () {
           var begin = (($scope.currentPage - 1) * $scope.pageSize);
           var end = begin + $scope.pageSize;
@@ -283,47 +298,29 @@
         // };
 
         // Hàm kiểm tra data
-        // function validateData(student) {
-        //   var errorMessage = "";
-        //
-        //   if (!student.firstName) {
-        //     errorMessage += "- Vui lòng nhập tên!\n";
-        //   } else if (!/^[a-zA-Z ]+$/.test(student.firstName)) {
-        //     errorMessage += "- Tên không được chứa ký tự đặc biệt!\n";
-        //   }
-        //
-        //   if (!student.lastName) {
-        //     errorMessage += "- Vui lòng nhập họ!\n";
-        //   } else if (!/^[a-zA-Z ]+$/.test(student.lastName)) {
-        //     errorMessage += "- Họ không được chứa ký tự đặc biệt!\n";
-        //   }
-        //
-        //   if (!student.address) {
-        //     errorMessage += "- Vui lòng nhập địa chỉ!\n";
-        //   }
-        //
-        //   if (!student.phone) {
-        //     errorMessage += "- Vui lòng nhập số điện thoại!\n";
-        //   } else if (!/^\d{10}$/.test(student.phone)) {
-        //     errorMessage += "- Số điện thoại phải có 10 chữ số!\n";
-        //   }
-        //
-        //   if (!student.age) {
-        //     errorMessage += "- Vui lòng nhập tuổi!\n";
-        //   } else if (student.age < 0) {
-        //     errorMessage += "- Tuổi không được là số âm!\n";
-        //   }
-        //
-        //   if (!student.dob) {
-        //     errorMessage += "- Vui lòng nhập ngày sinh!\n";
-        //   }
-        //
-        //   if (!ValidateEmail(student.email)) {
-        //     errorMessage += "- Địa chỉ email không hợp lệ!\n";
-        //   }
-        //
-        //   return errorMessage;
-        // }
+        function validateData(match) {
+          var errorMessage = "";
+
+          if (!match.name) {
+            errorMessage += "- Vui lòng nhập tên!\n";
+          } else if (!/^[a-zA-Z ]+$/.test(match.firstName)) {
+            errorMessage += "- Tên không được chứa ký tự đặc biệt!\n";
+          }
+
+          if (!match.address) {
+            errorMessage += "- Vui lòng nhập địa chỉ!\n";
+          }
+
+          if (!match.phoneNumber) {
+            errorMessage += "- Vui lòng nhập số điện thoại!\n";
+          }
+
+          if (!ValidateEmail(match.email)) {
+            errorMessage += "- Địa chỉ email không hợp lệ!\n";
+          }
+
+          return errorMessage;
+        }
 
 
 
@@ -347,18 +344,33 @@
         };
 
         $scope.deleteMatch = function () {
-          var today = new Date();
-          $scope.editStudentData.isDelete = 1;
-          saveDataToLocal($scope.editStudentData);
-          $scope.editStudentData = {};
+          var deleteData = {
+            historyId : $scope.deleteMatchData.historyId
+          }
+          $http({
+            method: 'POST',
+            url: '/removeHistory',
+            data: deleteData
+          }).then(function (response) {
+            if(response.data === false) {
+              alert('Đã xóa thất bại');
+            } else {
+              alert('Đã xóa thành công');
+              $scope.loadData();
+              $('#confirmModal').modal('hide');
+            }
+          }, function (error) {
+            console.error('Lỗi khi gọi API:', error);
+          });
+          $scope.loadData();
           $('#confirmModal').modal('hide');
         };
 
-        // $scope.checkEmailValidity = function () {
-        //   if (ValidateEmail(!$scope.email)) {
-        //     $window.alert("Invalid email!");
-        //   }
-        // };
+        $scope.checkEmailValidity = function () {
+          if (ValidateEmail(!$scope.email)) {
+            $window.alert("Invalid email!");
+          }
+        };
 
         function ValidateEmail(mail) {
           if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
@@ -366,6 +378,35 @@
           }
           return false;
         }
+        $scope.checkInput = function () {
+          var errorMessage = validateData($scope.updateMatchData);
+
+          if (errorMessage !== "") {
+            $window.alert('Mời kiểm tra lại thông tin:\n' + errorMessage);
+          } else {
+            var updateData = {
+              name: $scope.updateMatchData.name,
+              address: $scope.updateMatchData.address,
+              phoneNumber: $scope.updateMatchData.phoneNumber,
+              email: $scope.updateMatchData.email,
+              userId : $scope.userId
+            };
+            $http({
+              method: 'POST',
+              url: '/update',
+              data: updateData
+            }).then(function (response) {
+              if(response.data === false) {
+                alert('Cập nhật thất bại');
+              } else {
+                alert('Đã cập nhật thành công');
+                $('#updateAcc').modal('hide');
+              }
+            }, function (error) {
+              console.error('Lỗi khi gọi API:', error);
+            });
+          }
+        };
       });
     </script>
   </div>

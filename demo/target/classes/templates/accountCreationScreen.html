@@ -116,7 +116,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 <script>
     var app = angular.module('myApp', []);
-    app.controller('myCtrl', function ($scope, $http) {
+    app.controller('myCtrl', function ($scope, $http,$window) {
         $scope.submitForm = function () {
             if (!$scope.name || !$scope.address || !$scope.phoneNumber || !$scope.email || !$scope.username || !$scope.password  ) {
                 alert('Vui lòng điền đầy đủ thông tin.');
@@ -124,30 +124,54 @@
                 alert('Vui lòng nhập một địa chỉ email hợp lệ.');
             } else {
                 var data = {
-                    email: $scope.email,
-                    phoneNumber: $scope.phoneNumber,
-                    name: $scope.name,
-                    address: $scope.address,
                     username: $scope.username,
                     password: $scope.password
                 };
                 $http({
                     method: 'POST',
-                    url: '/createAcc',
+                    url: '/checkRepeat',
                     data: data, // Chuyển đổi thành chuỗi JSON
                     transformResponse: [function (data) {
                         return data;
                     }]
                 }).then(function (response) {
-                    alert('Lưu thành công.');
-                    alert('Điều hướng về đăng nhập');
-                    $window.location.href = '/login';
+                    if(response.data === "SUCCESS") {
+                        creatAccount();
+                    } else {
+                        alert('Tên tài khoản đã được đăng ký, vui lòng thử lại');
+                    }
 
                 }, function (error) {
                     alert('Có lỗi xảy ra khi gọi API.');
                 });
             }
         };
+
+        function creatAccount() {
+            var data = {
+                email: $scope.email,
+                phoneNumber: $scope.phoneNumber,
+                name: $scope.name,
+                address: $scope.address,
+                username: $scope.username,
+                password: $scope.password
+            };
+            $http({
+                method: 'POST',
+                url: '/createAcc',
+                data: data, // Chuyển đổi thành chuỗi JSON
+                transformResponse: [function (data) {
+                    return data;
+                }]
+            }).then(function (response) {
+                alert('Lưu thành công.');
+                alert('Điều hướng về đăng nhập');
+                $window.location.href = '/login';
+
+            }, function (error) {
+                alert('Có lỗi xảy ra khi gọi API.');
+            });
+        }
 
         function isValidEmail(email) {
             var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;

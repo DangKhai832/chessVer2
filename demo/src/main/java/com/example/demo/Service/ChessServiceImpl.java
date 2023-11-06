@@ -11,6 +11,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class ChessServiceImpl implements ChessService{
         obj.setIsDeleted(0L);
         obj.setElo(0L);
         obj.setCreatedDate(new Date());
-        return chessRepository.saveAndFlush(obj.toModel());
+        return chessRepository.save(obj.toModel());
     }
 
     @Override
@@ -69,4 +70,54 @@ public class ChessServiceImpl implements ChessService{
             return "FAIL";
         }
     }
+
+    @Override
+    public UserBO getInfoUser(UserDTO obj) {
+        Long userId = obj.getUserId(); // Lấy userId từ đối tượng UserDTO
+
+        List<Object[]> result = chessRepository.getInfoUser(userId);
+
+        if (!result.isEmpty()) {
+            Object[] row = result.get(0);
+
+            String email = row[0] != null ? row[0].toString() : null;
+            String name = row[1] != null ? row[1].toString() : null;
+            String address = row[2] != null ? row[2].toString() : null;
+            String phoneNumber = row[3] != null ? row[3].toString() : null;
+
+            UserBO userBO = new UserBO();
+            userBO.setEmail(email);
+            userBO.setName(name);
+            userBO.setAddress(address);
+            userBO.setPhoneNumber(phoneNumber);
+
+            return userBO;
+        } else {
+            //
+            return null;
+        }
+    }
+
+
+    @Transactional
+    @Override
+    public boolean update(UserDTO obj) {
+        String email = obj.getEmail();
+        String name = obj.getName();
+        String address = obj.getAddress();
+        String phoneNumber = obj.getPhoneNumber();
+        Long userId = obj.getUserId();
+
+        int rowsAffected = chessRepository.updateUserInfo(email, name, address, phoneNumber, userId);
+
+        return rowsAffected > 0;
+    }
+
+    @Transactional
+    @Override
+    public boolean removeHistory(HistoryBO obj) {
+        int rowsAffected = chessRepository.softDeleteUser(obj.getHistoryId());
+        return rowsAffected > 0;
+    }
+
 }

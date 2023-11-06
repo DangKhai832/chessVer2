@@ -25,10 +25,14 @@ public interface RestController {
     @RequestMapping(value = "/getHistory", method = RequestMethod.POST)
     public List<HistoryDTO> getHistory(@RequestBody UserDTO obj);
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public List<HistoryDTO> update();
+    @RequestMapping(value = "/getInfoUser", method = RequestMethod.POST)
+    public UserBO getInfoUser(@RequestBody UserDTO obj);
 
-    @RequestMapping(value = "/remove", method = RequestMethod.POST)
-    public List<HistoryDTO> remove();
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public boolean update(@RequestBody UserDTO obj);
+
+    @RequestMapping(value = "/removeHistory", method = RequestMethod.POST)
+    public boolean removeHistory(@RequestBody HistoryBO obj);
 
 }

@@ -42,12 +42,19 @@ public class RestControllerImpl implements RestController{
     }
 
     @Override
-    public List<HistoryDTO> update() {
-        return null;
+    public UserBO getInfoUser(UserDTO obj) {
+        return chessService.getInfoUser(obj);
     }
 
     @Override
-    public List<HistoryDTO> remove() {
-        return null;
+    public boolean update(UserDTO obj) {
+        return chessService.update(obj);
     }
+
+    @Override
+    public boolean removeHistory(HistoryBO obj) {
+        return chessService.removeHistory(obj);
+    }
+
+
 }
