@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Map;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestControllerImpl implements RestController{
@@ -26,22 +27,27 @@ public class RestControllerImpl implements RestController{
     }
 
     @Override
-    public String checkLogin(UserDTO obj) {
+    public Long checkLogin(UserDTO obj) {
         return chessService.checkLogin(obj);
     }
 
     @Override
-    public UserBO update(UserDTO obj) {
-        return chessService.update(obj);
+    public String checkRepeat(UserDTO obj) {
+        return chessService.checkRepeat(obj);
     }
 
     @Override
-    public UserBO delete(UserDTO obj) {
-        return chessService.delete(obj);
+    public List<HistoryDTO> getHistory(UserDTO obj) {
+        return chessService.getHistory(obj);
     }
 
     @Override
-    public List<HistoryDTO> getHistory() {
-        return chessService.getHistory();
+    public List<HistoryDTO> update() {
+        return null;
+    }
+
+    @Override
+    public List<HistoryDTO> remove() {
+        return null;
     }
 }

@@ -241,11 +241,11 @@ input[type="submit"]:active
                         return data;
                     }]
                 }).then(function (response) {
-                    if(response.data === "SUCCESS") {
-                        $window.location.href = '/information';
-
-                    } else {
+                    if(response.data === '-1') {
                         alert("Sai tài khoản hoặc mật khẩu, vui lòng thử lại");
+                    } else {
+                        var userId = response.data;
+                        $window.location.href = '/information?userId=' + userId;
                     }
                 }, function (error) {
                     console.log(error);

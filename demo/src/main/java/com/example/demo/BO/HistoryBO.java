@@ -26,6 +26,9 @@ public class HistoryBO {
     @Column(name = "USER_ID")
     private Long userId;
 
+    @Column(name = "IS_DELETED")
+    private Long isDeleted;
+
     public Long getHistoryId() {
         return historyId;
     }
@@ -64,5 +67,13 @@ public class HistoryBO {
 
     public void setResult(Long result) {
         this.result = result;
+    }
+
+    public Long getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Long isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

@@ -11,8 +11,11 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -40,24 +43,27 @@ public class ChessServiceImpl implements ChessService{
     }
 
     @Override
-    public UserBO update(UserDTO obj) {
-        return chessRepository.update(obj);
+    public List<HistoryDTO>getHistory(UserDTO obj) {
+        return chessRepository.getHistory(obj.getUserId());
     }
 
     @Override
-    public UserBO delete(UserDTO obj) {
-        return chessRepository.delete(obj);
+    public Long checkLogin(UserDTO obj) {
+        List<Map<BigInteger, BigInteger>> result = chessRepository.checkLogin(obj.getUsername(), obj.getPassword());
+
+        if (result.size() == 1 && result.get(0).get("userId") != null ) {
+            Map<BigInteger, BigInteger> singleResult = result.get(0);
+            BigInteger userId = singleResult.get("userId");
+            return userId.longValue();
+        } else {
+            return -1L;
+        }
     }
 
     @Override
-    public List<HistoryDTO>getHistory() {
-        return chessRepository.getHistory();
-    }
-
-    @Override
-    public String checkLogin(UserDTO obj) {
-        Long count = chessRepository.checkLogin(obj.getUsername(), obj.getPassword());
-        if(count == 1) {
+    public String checkRepeat(UserDTO obj) {
+        Long count = chessRepository.checkRepeat(obj.getUsername());
+        if(count == 0) {
             return "SUCCESS";
         } else {
             return "FAIL";

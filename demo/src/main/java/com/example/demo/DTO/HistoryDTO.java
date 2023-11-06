@@ -11,4 +11,5 @@ public interface HistoryDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     LocalDateTime getUpdatedTime();
     Long getUserId();
+    Long isDeleted();
 }

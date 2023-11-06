@@ -10,9 +10,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import java.math.BigInteger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface ChessRepository extends JpaRepository<UserBO,Long> {
@@ -121,10 +123,12 @@ public interface ChessRepository extends JpaRepository<UserBO,Long> {
     };
 
 
-    @Query(value = "SELECT h.history_id historyId, h.color color, h.result result , h.updated_time updatedTime, h.user_id userId FROM history h", nativeQuery = true)
-    List<HistoryDTO> getHistory();
+    @Query(value = "SELECT h.history_id historyId, h.color color, h.result result , h.updated_time updatedTime, h.user_id userId FROM history h WHERE h.user_id =:userId", nativeQuery = true)
+    List<HistoryDTO> getHistory(@Param("userId") Long userId);
 
-    @Query(value = "SELECT COUNT(*) FROM CHESS c WHERE c.username = :username AND c.password = :password", nativeQuery = true)
-    Long checkLogin(@Param("username") String username, @Param("password") String password);
+    @Query(value = "SELECT COUNT(*) as count, c.USER_ID as userId FROM CHESS c WHERE c.username = :username AND c.password = :password", nativeQuery = true)
+    List<Map<BigInteger, BigInteger>> checkLogin(@Param("username") String username, @Param("password") String password);
 
+    @Query(value = "SELECT COUNT(*) FROM CHESS c WHERE c.username = :username", nativeQuery = true)
+    Long checkRepeat(@Param("username") String username);
 }
