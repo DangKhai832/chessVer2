@@ -42,7 +42,7 @@
         <div class="action-right col-md-8">
           <form>
             <div class="form-group">
-              <button  class="btn btn-primary">Chơi game</button>
+              <button  class="btn btn-primary" ng-click="alertTB()" >Chơi game</button>
             </div>
           </form>
         </div>
@@ -407,6 +407,9 @@
             });
           }
         };
+        $scope.alertTB = function () {
+          alert('Tính năng chưa phát triển!!!')
+        }
       });
     </script>
   </div>
