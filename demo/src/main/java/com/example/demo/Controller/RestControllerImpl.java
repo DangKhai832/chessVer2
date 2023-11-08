@@ -51,6 +51,7 @@ public class RestControllerImpl implements RestController{
         return chessService.update(obj);
     }
 
+
     @Override
     public boolean removeHistory(HistoryBO obj) {
         return chessService.removeHistory(obj);
