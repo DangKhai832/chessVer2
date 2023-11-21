@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html ng-app="myApp" xmlns=http://www.w3.org/1999/xhtml>
+
+<head>
+    <title>PTTKHTTT</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/279cd13ff5.js"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+</head>
+
+<body ng-controller="ReportsController">
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-info">
+    <a class="navbar-brand text-white logo" ng-href="{{ session.manager ? '/manager/home' : '/home' }}">
+        <h2 style="font-family: 'Playfair Display', serif;">LibMan</h2>
+    </a>
+</nav>
+
+<div style="margin-top: 3%; margin-bottom: 3%" class="container">
+    <div class="text-center" style="margin-bottom: 2%">
+        <h1 style="font-family: 'Playfair Display', serif;">Time Borrow Details</h1>
+    </div>
+
+    <div style="margin-bottom: 1%">
+        <div style="color: black; font-size: 20px;">
+            Document ID:&emsp;{{ document.id }}
+        </div>
+        <div style="color: black; font-size: 20px;">
+            Tên tài liệu :&emsp;{{ document.name }}
+        </div>
+        <div style="color: black; font-size: 20px;">
+            Mô tả:&emsp;{{ document.description }}
+        </div>
+        <div style="color: black; font-size: 20px;">
+            Loại:&emsp;{{ document.type }}
+        </div>
+    </div>
+
+
+    <div class="table-responsive-xl">
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col" class="text-center" style="width: 9%; font-family: 'Playfair Display', serif;">ID lượt mượn</th>
+                <th scope="col" class="text-center" style="width: 13%; font-family: 'Playfair Display', serif;">IDngười mượn</th>
+                <th scope="col" class="text-center" style="width: 13%; font-family: 'Playfair Display', serif;">Ngày mượn</th>
+                <th scope="col" class="text-center" style="width: 13%; font-family: 'Playfair Display', serif;">ID tài liệu</th>
+                <th scope="col" class="text-center" style="width: 10%; font-family: 'Playfair Display', serif;">ID phiếu mượn</th>
+                <th scope="col" class="text-center" style="width: 6%; font-family: 'Playfair Display', serif;">Chi Tiết</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr ng-repeat="document in documentList">
+                <td class="text-center">{{ document.borrowReceiptId }}</td>
+                <td class="text-center">{{ document.readerId }}</td>
+                <td class="text-center">{{ document.date }}</td>
+                <td class="text-center">{{ document.documentId }}</td>
+                <td class="text-center">{{ document.borrowReceiptId }}</td>
+                <td class="text-center">
+                    <a style="display: inline-block" class="btn btn-primary"
+                       ng-href="/manager/reports/receipt/{{ receipt.borrowReceiptId }}">View</a>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <a class="btn btn-primary mt-auto" ng-href="/manager/reports/items">Back</a>
+</div>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('ReportsController', function ($scope, $window, $http, $location) {
+        // Thêm dữ liệu giả định
+        var url = new URL(window.location.href);
+
+        var fromDate = url.searchParams.get("fromDate");
+        var toDate = url.searchParams.get("toDate");
+        var documentId = url.searchParams.get("documentId");
+        var name = url.searchParams.get("name");
+        var description = url.searchParams.get("description");
+        var type = url.searchParams.get("type");
+
+        $scope.document = {
+            id: documentId,
+            name: name,
+            description: description,
+            type: type
+        };
+
+        function init() {
+            var data = {
+                documentId : documentId,
+                fromDate : fromDate,
+                toDate : toDate
+            }
+            $http({
+                method: 'POST',
+                url: '/getDocumentTransactions',
+                data: data, // Chuyển đổi thành chuỗi JSON
+                transformResponse: [function (data) {
+                    return data;
+                }]
+            }).then(function (response) {
+                alert("đẹp trai");
+                $scope.documentList = JSON.parse(response.data);
+            }, function (error) {
+                console.log(error);
+                $scope.greetingMessage = "Error loading get data.";
+            });
+        }
+
+        // Gọi hàm khởi tạo
+        init();
+    });
+</script>
+
+</body>
+
+</html>

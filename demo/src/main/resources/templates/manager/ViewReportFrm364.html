@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+  <title>PTTKHTTT</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+        crossorigin="anonymous">
+
+  <script src="https://code.angularjs.org/1.7.9/angular.min.js"></script>
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+
+<body ng-controller="myController">
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-info">
+  <a class="navbar-brand text-white logo" ng-href="{{session.manager ? '/manager/home' : '/home'}}">
+    <h2 style="font-family: 'Playfair Display', serif;">LibMan</h2>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto" ng-if="session.manager">
+      <li class="nav-item"><a class="nav-link text-white" ng-href="/manager/home"
+                              style="font-size: 20px; font-weight: bold; font-family: 'Playfair Display', serif;">Home</a>
+      </li>
+      <li class="nav-item"><a class="nav-link text-white" ng-href="/manager/reports"
+                              style="font-size: 20px; font-weight: bold; font-family: 'Playfair Display', serif;">View reports</a></li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" ng-if="!session.manager"><a class="nav-link text-white" ng-href="/login"
+                                                       style="font-size: 20px; font-weight: bold; font-family: 'Playfair Display', serif;">Login</a></li>
+      <li class="nav-item dropdown" ng-if="session.manager">
+        <a class="nav-link dropdown-toggle text-white" href="#"
+           id="navbarDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false"
+           ng-bind="session.manager.getFullname"></a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="right: 0px;">
+          <a class="dropdown-item" style="font-family: 'Playfair Display', serif;" href="#">Profile</a>
+          <a class="dropdown-item" style="font-family: 'Playfair Display', serif;" href="#">Change password</a>
+          <a class="dropdown-item" style="font-family: 'Playfair Display', serif;" href="/logout">Logout</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div style="margin-top: 3%; margin-bottom: 3%" class="container">
+  <div class="text-center" style="margin-bottom: 2%">
+    <button class="btn btn-primary" style="font-family: 'Playfair Display', serif;" ng-click="openView()">View Document By Time Borrow nek </button>
+  </div>
+</div>
+
+<script>
+  var app = angular.module('myApp', []);
+
+  app.controller('myController', function ($scope, $location, $window) {
+    // Define your session object if needed
+    $scope.session = {
+      manager: true,
+    };
+
+    $scope.openView = function () {
+      console.log("Button clicked!"); // Add a console log to check if the function is being called
+      $window.location.href = '/home/manager/viewDocumentByTimeBorrow';
+    }
+  });
+</script>
+</body>
+
+</html>
